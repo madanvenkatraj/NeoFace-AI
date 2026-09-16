@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+celery
+redis
+onnxruntime-gpu
+insightface
+opencv-python
+ffmpeg-python
+torch
+torchvision

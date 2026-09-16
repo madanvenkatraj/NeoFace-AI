@@ -1,0 +1,225 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile data",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "User ID",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address",
+          "maxLength": 256
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name",
+          "maxLength": 100
+        },
+        "preferences": {
+          "type": "object",
+          "description": "User specific application preferences",
+          "properties": {
+            "resolution": {
+              "type": "string",
+              "maxLength": 20
+            },
+            "frameRate": {
+              "type": "number"
+            },
+            "compression": {
+              "type": "string",
+              "maxLength": 20
+            }
+          }
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "updatedAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "uid",
+        "email",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Face swap processing job",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Job ID",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "description": "User ID",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "processing",
+            "completed",
+            "failed"
+          ]
+        },
+        "progress": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "updatedAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "status",
+        "progress",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ExportSetting": {
+      "title": "ExportSetting",
+      "description": "Saved export preset",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "resolution": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "frameRate": {
+          "type": "number"
+        },
+        "compression": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            "lossless"
+          ]
+        },
+        "createdAt": {
+          "type": "number"
+        },
+        "updatedAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "name",
+        "resolution",
+        "frameRate",
+        "compression",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "SwapResult": {
+      "title": "SwapResult",
+      "description": "Result of a face swap operation",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "resultUrl": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "thumbnailUrl": {
+          "type": "string",
+          "maxLength": 1024
+        },
+        "isVideo": {
+          "type": "boolean"
+        },
+        "qualityMode": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "facesSwapped": {
+          "type": "number"
+        },
+        "createdAt": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "resultUrl",
+        "isVideo",
+        "createdAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/User"
+      },
+      "description": "User profiles"
+    },
+    "/jobs/{jobId}": {
+      "schema": {
+        "$ref": "#/entities/Job"
+      },
+      "description": "Processing jobs"
+    },
+    "/users/{userId}/exportSettings/{settingId}": {
+      "schema": {
+        "$ref": "#/entities/ExportSetting"
+      },
+      "description": "User's saved export settings"
+    },
+    "/users/{userId}/swapHistory/{resultId}": {
+      "schema": {
+        "$ref": "#/entities/SwapResult"
+      },
+      "description": "User's face swap history"
+    }
+  }
+}

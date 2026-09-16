@@ -1,0 +1,6 @@
+{
+  "name": "NeoFace AI",
+  "description": "High-performance photo and video face swapping without watermarks using ONNX and InsightFace.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
